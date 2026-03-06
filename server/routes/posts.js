@@ -17,9 +17,9 @@ function estimateReadTime(content) {
   return `${mins} min read`;
 }
 
-// ── PUBLIC ROUTES ────────────────────────────────────────────────────────
+// ── PUBLIC ROUTES ──────────────────────────────────────────────────────────
 
-// GET /api/posts — list published posts
+// GET /api/posts – list published posts
 router.get('/', (req, res) => {
   const { category, tag, search, page = 1, limit = 10, featured } = req.query;
   let sql = 'SELECT id, slug, title, excerpt, category, tags, read_time, views, featured, created_at FROM posts WHERE status = "published"';
@@ -30,7 +30,6 @@ router.get('/', (req, res) => {
   if (search) { sql += ' AND (title LIKE ? OR excerpt LIKE ? OR content LIKE ?)'; const q = `%${search}%`; params.push(q, q, q); }
   if (tag) { sql += ' AND tags LIKE ?'; params.push(`%${tag}%`); }
 
-  // Count total
   const countSql = sql.replace('SELECT id, slug, title, excerpt, category, tags, read_time, views, featured, created_at', 'SELECT COUNT(*) as total');
   const countRow = prepare(countSql).get(...params);
   const total = countRow ? countRow.total : 0;
@@ -46,7 +45,7 @@ router.get('/', (req, res) => {
   res.json({ posts, total, page: Number(page), pages: Math.ceil(total / limit) });
 });
 
-// GET /api/posts/categories — post count per category
+// GET /api/posts/categories – post count per category
 router.get('/categories', (req, res) => {
   const rows = prepare(`
     SELECT category, COUNT(*) as count FROM posts
@@ -54,44 +53,11 @@ router.get('/categories', (req, res) => {
   `).all();
   res.json(rows);
 });
-// Admin: get single post by ID (includes drafts)
-router.get('/admin/:id', async (req, res) => {
-  try {
-    const post = await db.get('SELECT * FROM posts WHERE id = ?', [req.params.id]);
-    if (!post) return res.status(404).json({ error: 'Post not found' });
-    res.json(post);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
-// GET /api/posts/:slug — single published post
-router.get('/:slug', (req, res) => {
-  const post = prepare('SELECT * FROM posts WHERE slug = ? AND status = "published"').get(req.params.slug);
-  if (!post) return res.status(404).json({ error: 'Post not found' });
 
-  // Increment view count
-  prepare('UPDATE posts SET views = views + 1 WHERE id = ?').run(post.id);
+// ── ADMIN ROUTES (protected) ───────────────────────────────────────────────
+// IMPORTANT: these must come BEFORE /:slug to avoid slug matching "admin"
 
-  // Render markdown to HTML
-  const html = marked.parse(post.content);
-
-  // Get approved comments
-  const comments = prepare(`
-    SELECT id, name, body, created_at FROM comments
-    WHERE post_id = ? AND approved = 1 ORDER BY created_at ASC
-  `).all(post.id);
-
-  res.json({
-    ...post,
-    tags: JSON.parse(post.tags || '[]'),
-    content_html: html,
-    comments
-  });
-});
-
-// ── ADMIN ROUTES (protected) ─────────────────────────────────────────────
-
-// GET /api/posts/admin/all — all posts including drafts
+// GET /api/posts/admin/all – all posts including drafts
 router.get('/admin/all', requireAuth, (req, res) => {
   const posts = prepare(`
     SELECT id, slug, title, category, status, featured, views, created_at, updated_at
@@ -100,13 +66,19 @@ router.get('/admin/all', requireAuth, (req, res) => {
   res.json(posts);
 });
 
-// POST /api/posts — create post
+// GET /api/posts/admin/:id – single post by ID (includes drafts)
+router.get('/admin/:id', requireAuth, (req, res) => {
+  const post = prepare('SELECT * FROM posts WHERE id = ?').get(req.params.id);
+  if (!post) return res.status(404).json({ error: 'Post not found' });
+  res.json({ ...post, tags: JSON.parse(post.tags || '[]') });
+});
+
+// POST /api/posts – create post
 router.post('/', requireAuth, (req, res) => {
   const { title, excerpt, content, category, tags = [], status = 'draft', featured = false } = req.body;
   if (!title || !excerpt || !content || !category) return res.status(400).json({ error: 'title, excerpt, content, category are required' });
 
   let slug = slugify(title);
-  // Ensure unique slug
   const existing = prepare('SELECT id FROM posts WHERE slug = ?').get(slug);
   if (existing) slug += '-' + Date.now().toString(36);
 
@@ -120,7 +92,7 @@ router.post('/', requireAuth, (req, res) => {
   res.status(201).json({ ...post, tags: JSON.parse(post.tags) });
 });
 
-// PUT /api/posts/:id — update post
+// PUT /api/posts/:id – update post
 router.put('/:id', requireAuth, (req, res) => {
   const { title, excerpt, content, category, tags, status, featured } = req.body;
   const post = prepare('SELECT * FROM posts WHERE id = ?').get(req.params.id);
@@ -152,6 +124,28 @@ router.delete('/:id', requireAuth, (req, res) => {
   if (!post) return res.status(404).json({ error: 'Post not found' });
   prepare('DELETE FROM posts WHERE id = ?').run(req.params.id);
   res.json({ message: 'Post deleted' });
+});
+
+// GET /api/posts/:slug – single published post (MUST be last)
+router.get('/:slug', (req, res) => {
+  const post = prepare('SELECT * FROM posts WHERE slug = ? AND status = "published"').get(req.params.slug);
+  if (!post) return res.status(404).json({ error: 'Post not found' });
+
+  prepare('UPDATE posts SET views = views + 1 WHERE id = ?').run(post.id);
+
+  const html = marked.parse(post.content);
+
+  const comments = prepare(`
+    SELECT id, name, body, created_at FROM comments
+    WHERE post_id = ? AND approved = 1 ORDER BY created_at ASC
+  `).all(post.id);
+
+  res.json({
+    ...post,
+    tags: JSON.parse(post.tags || '[]'),
+    content_html: html,
+    comments
+  });
 });
 
 module.exports = router;
