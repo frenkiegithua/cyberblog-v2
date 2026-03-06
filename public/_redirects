@@ -8,6 +8,8 @@
 /pages/blog           /pages/blog.html          200
 /pages/categories     /pages/categories.html    200
 /pages/article        /pages/article.html       200
+
+/api/*                https://cyberblog-v2-production.up.railway.app/api/:splat 200
 /pages/about          /pages/about.html         200
 /pages/contact        /pages/contact.html       200
 /pages/resources      /pages/resources.html     200
