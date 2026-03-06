@@ -54,7 +54,16 @@ router.get('/categories', (req, res) => {
   `).all();
   res.json(rows);
 });
-
+// Admin: get single post by ID (includes drafts)
+router.get('/admin/:id', async (req, res) => {
+  try {
+    const post = await db.get('SELECT * FROM posts WHERE id = ?', [req.params.id]);
+    if (!post) return res.status(404).json({ error: 'Post not found' });
+    res.json(post);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 // GET /api/posts/:slug — single published post
 router.get('/:slug', (req, res) => {
   const post = prepare('SELECT * FROM posts WHERE slug = ? AND status = "published"').get(req.params.slug);

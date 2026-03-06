@@ -579,27 +579,26 @@ function clearEditor() {
 }
 
 async function editPost(id) {
-  const posts = await api('GET', '/posts/admin/all');
-  const p = posts.find(x => x.id === id);
-  if (!p) return;
+  try {
+    const res = await fetch(`${API}/posts/admin/${id}`);
+    if (!res.ok) throw new Error('Failed to fetch post');
+    const post = await res.json();
 
-  let full = null;
-  try { full = await api('GET', `/posts/${p.slug}`); } catch {}
+    document.getElementById('post-id').value = post.id;
+    document.getElementById('post-title').value = post.title;
+    document.getElementById('post-slug').value = post.slug;
+    document.getElementById('post-excerpt').value = post.excerpt || '';
+    document.getElementById('post-content').value = post.content;
+    document.getElementById('post-category').value = post.category;
+    document.getElementById('post-tags').value = post.tags || '';
+    document.getElementById('post-status').value = post.status;
+    document.getElementById('post-featured').checked = post.featured == 1;
 
-  editingPostId = id;
-  document.getElementById('editPostId').value = id;
-  document.getElementById('postTitle').value = p.title;
-  document.getElementById('postCategory').value = p.category;
-  document.getElementById('postStatus').value = p.status;
-  document.getElementById('postFeatured').checked = !!p.featured;
-  if (full) {
-    document.getElementById('postExcerpt').value = full.excerpt;
-    document.getElementById('postContent').value = full.content;
-    document.getElementById('postTags').value = full.tags.join(', ');
+    document.getElementById('form-title').textContent = 'Edit Post';
+    document.getElementById('post-form-section').scrollIntoView({ behavior: 'smooth' });
+  } catch (err) {
+    showToast('Error loading post: ' + err.message, 'error');
   }
-  document.getElementById('pageTitle').textContent = '// Edit Post';
-  navigateTo('new-post');
-  setupEditorActions();
 }
 
 document.getElementById('savePostBtn').onclick = async () => {
