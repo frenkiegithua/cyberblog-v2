@@ -38,21 +38,6 @@ app.use(express.static(path.join(__dirname, '../public')));
 app.use('/admin', express.static(path.join(__dirname, '../admin')));
 
 // Wait for DB before registering routes
-const fs = require('fs');
-
-// Ensure data directory exists
-const dataDir = path.join(__dirname, 'data');
-if (!fs.existsSync(dataDir)) {
-  fs.mkdirSync(dataDir, { recursive: true });
-}
-
-// Auto-initialize database if it doesn't exist
-const dbPath = path.join(dataDir, 'blog.db');
-if (!fs.existsSync(dbPath)) {
-  console.log('Database not found, initializing...');
-  require('./setup-db.js');
-}
-
 initDB().then(() => {
   console.log('✓ Database ready');
 

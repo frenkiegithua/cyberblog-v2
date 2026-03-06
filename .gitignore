@@ -7,6 +7,6 @@ dist/
 build/
 .idea/
 .vscode/
-data/db.sqlite
-data/db.sqlite-shm
-data/db.sqlite-wal
+# Allow blog.db but ignore temporary sqlite files
+data/*-shm
+data/*-wal
