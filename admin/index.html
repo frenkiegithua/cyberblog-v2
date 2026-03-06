@@ -191,7 +191,7 @@
     <div class="nav-item" data-page="comments"><span class="icon">◎</span> Comments <span class="nav-badge" id="pendingBadge" style="display:none">0</span></div>
     <div class="nav-section">Config</div>
     <div class="nav-item" data-page="settings"><span class="icon">⚙</span> Settings</div>
-    <div class="nav-item" onclick="window.open('/','_blank')"><span class="icon">↗</span> View Blog</div>
+    <div class="nav-item" id="viewBlogLink"><span class="icon">↗</span> View Blog</div>
     <div class="sidebar-bottom">
       <div class="user-info">
         <div class="user-avatar" id="userInitial">FG</div>
@@ -325,9 +325,9 @@
       <!-- COMMENTS -->
       <div class="page" id="page-comments">
         <div style="display:flex;gap:10px;margin-bottom:20px">
-          <button class="btn-sm btn-ghost active" id="filterAll" onclick="filterComments('all')">All</button>
-          <button class="btn-sm btn-ghost" id="filterPending" onclick="filterComments('pending')">Pending</button>
-          <button class="btn-sm btn-ghost" id="filterApproved" onclick="filterComments('approved')">Approved</button>
+          <button class="btn-sm btn-ghost active" id="filterAll" data-filter="all">All</button>
+          <button class="btn-sm btn-ghost" id="filterPending" data-filter="pending">Pending</button>
+          <button class="btn-sm btn-ghost" id="filterApproved" data-filter="approved">Approved</button>
         </div>
         <div id="commentsList"></div>
       </div>
@@ -344,7 +344,7 @@
               <span>Comment Moderation</span>
               <label class="toggle"><input type="checkbox" id="set-comment_moderation"/><span class="toggle-slider"></span></label>
             </div>
-            <button class="btn-sm btn-success" onclick="saveSettings()">Save Settings</button>
+            <button class="btn-sm btn-success" id="saveSettingsBtn">Save Settings</button>
           </div>
           <div class="card">
             <div class="card-title">// Author Profile</div>
@@ -353,7 +353,7 @@
             <div class="editor-field"><label class="editor-label">GitHub URL</label><input type="text" class="editor-input" id="set-author_github"/></div>
             <div class="editor-field"><label class="editor-label">TryHackMe URL</label><input type="text" class="editor-input" id="set-author_tryhackme"/></div>
             <div class="editor-field"><label class="editor-label">Portfolio URL</label><input type="text" class="editor-input" id="set-author_portfolio"/></div>
-            <button class="btn-sm btn-success" onclick="saveSettings()">Save Profile</button>
+            <button class="btn-sm btn-success" id="saveProfileBtn">Save Profile</button>
           </div>
         </div>
         <div class="card" style="margin-top:20px">
@@ -361,7 +361,7 @@
           <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;align-items:end">
             <div class="editor-field" style="margin:0"><label class="editor-label">Current Password</label><input type="password" class="editor-input" id="pwCurrent"/></div>
             <div class="editor-field" style="margin:0"><label class="editor-label">New Password</label><input type="password" class="editor-input" id="pwNew"/></div>
-            <button class="btn-sm btn-success" style="height:38px" onclick="changePassword()">Update Password</button>
+            <button class="btn-sm btn-success" style="height:38px" id="changePasswordBtn">Update Password</button>
           </div>
         </div>
       </div>
@@ -377,12 +377,15 @@ const API = '/api';
 let token = localStorage.getItem('cn_token') || '';
 let currentPage = 'dashboard';
 let allComments = [];
+let allPosts = [];
 let editingPostId = null;
 
+// Load marked.js for preview
 const markedScript = document.createElement('script');
 markedScript.src = 'https://cdn.jsdelivr.net/npm/marked/marked.min.js';
 document.head.appendChild(markedScript);
 
+// ── API HELPER ────────────────────────────────────────────────────────────
 async function api(method, path, body) {
   const opts = {
     method,
@@ -398,7 +401,8 @@ async function api(method, path, body) {
   return data;
 }
 
-document.getElementById('loginBtn').onclick = async () => {
+// ── AUTH ──────────────────────────────────────────────────────────────────
+document.getElementById('loginBtn').addEventListener('click', async () => {
   const username = document.getElementById('loginUser').value.trim();
   const password = document.getElementById('loginPass').value;
   const errEl = document.getElementById('loginError');
@@ -410,18 +414,23 @@ document.getElementById('loginBtn').onclick = async () => {
     errEl.textContent = '';
     initApp(data.user);
   } catch(e) { errEl.textContent = '// ' + e.message; }
-};
+});
 
 document.getElementById('loginPass').addEventListener('keydown', e => {
   if (e.key === 'Enter') document.getElementById('loginBtn').click();
 });
 
-document.getElementById('logoutBtn').onclick = () => {
+document.getElementById('logoutBtn').addEventListener('click', () => {
   token = ''; localStorage.removeItem('cn_token');
   document.getElementById('app').classList.remove('visible');
   document.getElementById('loginScreen').style.display = 'flex';
-};
+});
 
+document.getElementById('viewBlogLink').addEventListener('click', () => {
+  window.open('/', '_blank');
+});
+
+// ── INIT ──────────────────────────────────────────────────────────────────
 async function initApp(user) {
   document.getElementById('loginScreen').style.display = 'none';
   document.getElementById('app').classList.add('visible');
@@ -439,6 +448,7 @@ if (token) {
   });
 }
 
+// ── NAVIGATION ────────────────────────────────────────────────────────────
 document.querySelectorAll('.nav-item[data-page]').forEach(item => {
   item.addEventListener('click', () => navigateTo(item.dataset.page));
 });
@@ -463,41 +473,42 @@ function navigateTo(page) {
   else if (page === 'settings') loadSettings();
 }
 
+// ── DASHBOARD ─────────────────────────────────────────────────────────────
 async function loadDashboard() {
-  const d = await api('GET', '/admin/stats');
-  const s = d.stats;
-  document.getElementById('s-total').textContent = s.totalPosts;
-  document.getElementById('s-published').textContent = s.published;
-  document.getElementById('s-drafts').textContent = s.drafts;
-  document.getElementById('s-views').textContent = s.totalViews.toLocaleString();
-  document.getElementById('s-comments').textContent = s.totalComments;
-  document.getElementById('s-pending').textContent = s.pendingComments;
+  try {
+    const d = await api('GET', '/admin/stats');
+    const s = d.stats;
+    document.getElementById('s-total').textContent = s.totalPosts;
+    document.getElementById('s-published').textContent = s.published;
+    document.getElementById('s-drafts').textContent = s.drafts;
+    document.getElementById('s-views').textContent = s.totalViews.toLocaleString();
+    document.getElementById('s-comments').textContent = s.totalComments;
+    document.getElementById('s-pending').textContent = s.pendingComments;
 
-  document.getElementById('recentPostsList').innerHTML = d.recentPosts.map(p => `
-    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:.85rem">
-      <span class="badge badge-${p.status}">${p.status}</span>
-      <span style="flex:1;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.title}</span>
-      <button class="btn-sm btn-ghost" onclick="editPost(${p.id})" style="flex-shrink:0">Edit</button>
-    </div>`).join('') || '<div class="empty-state">No posts yet</div>';
+    document.getElementById('recentPostsList').innerHTML = d.recentPosts.map(p => `
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:.85rem">
+        <span class="badge badge-${p.status}">${p.status}</span>
+        <span style="flex:1;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.title}</span>
+        <button class="btn-sm btn-ghost" data-action="edit" data-id="${p.id}" style="flex-shrink:0">Edit</button>
+      </div>`).join('') || '<div class="empty-state">No posts yet</div>';
 
-  document.getElementById('topPostsList').innerHTML = d.topPosts.map(p => `
-    <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:.85rem">
-      <span style="font-family:var(--font-mono);color:var(--accent);min-width:48px">${p.views} 👁</span>
-      <span style="flex:1;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.title}</span>
-    </div>`).join('') || '<div class="empty-state">No views yet</div>';
+    document.getElementById('topPostsList').innerHTML = d.topPosts.map(p => `
+      <div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:.85rem">
+        <span style="font-family:var(--font-mono);color:var(--accent);min-width:48px">${p.views} 👁</span>
+        <span style="flex:1;color:var(--text);overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${p.title}</span>
+      </div>`).join('') || '<div class="empty-state">No views yet</div>';
+  } catch(e) { toast('Failed to load dashboard: ' + e.message, true); }
 }
 
-let allPosts = [];
-
+// ── POSTS ─────────────────────────────────────────────────────────────────
 async function loadPosts() {
-  // No button on All Posts page
   document.getElementById('topbarActions').innerHTML = '';
+  try {
+    const d = await api('GET', '/posts/admin/all');
+    allPosts = d;
+    renderPostsTable(allPosts);
+  } catch(e) { toast('Failed to load posts: ' + e.message, true); }
 
-  const d = await api('GET', '/posts/admin/all');
-  allPosts = d;
-  renderPostsTable(allPosts);
-
-  // Replace elements to clear old listeners
   const searchEl = document.getElementById('postSearch');
   const filterEl = document.getElementById('postFilter');
   const newSearch = searchEl.cloneNode(true);
@@ -527,26 +538,55 @@ function renderPostsTable(posts) {
       <td style="font-family:var(--font-mono)">${p.views || 0}</td>
       <td style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3)">${p.created_at?.slice(0,10)}</td>
       <td><div class="td-actions">
-        <button class="btn-sm btn-ghost" onclick="editPost(${p.id})">Edit</button>
-        <button class="btn-sm btn-danger" onclick="deletePost(${p.id},'${p.title.replace(/'/g,"\\'")}')">Del</button>
+        <button class="btn-sm btn-ghost" data-action="edit" data-id="${p.id}">Edit</button>
+        <button class="btn-sm btn-danger" data-action="delete" data-id="${p.id}" data-title="${p.title.replace(/"/g,'&quot;')}">Del</button>
       </div></td>
     </tr>`).join('');
 }
 
-async function deletePost(id, title) {
-  if (!confirm(`Delete "${title}"?`)) return;
-  try {
-    await api('DELETE', `/posts/${id}`);
-    toast('Post deleted');
-    loadPosts();
-  } catch(e) {
-    toast('Delete failed: ' + e.message, true);
-  }
-}
+// ── EVENT DELEGATION for posts table & dashboard ───────────────────────────
+document.getElementById('mainContent').addEventListener('click', async e => {
+  const btn = e.target.closest('[data-action]');
+  if (!btn) return;
+  const action = btn.dataset.action;
+  const id = btn.dataset.id;
 
+  if (action === 'edit') {
+    await editPost(id);
+  } else if (action === 'delete') {
+    const title = btn.dataset.title;
+    if (!confirm(`Delete "${title}"?`)) return;
+    try {
+      await api('DELETE', `/posts/${id}`);
+      toast('Post deleted');
+      loadPosts();
+    } catch(e) { toast('Delete failed: ' + e.message, true); }
+  } else if (action === 'approve-comment') {
+    try {
+      await api('PUT', `/comments/${id}/approve`);
+      toast('Comment approved');
+      loadComments();
+      loadPendingCount();
+    } catch(e) { toast('Failed: ' + e.message, true); }
+  } else if (action === 'delete-comment') {
+    if (!confirm('Delete this comment?')) return;
+    try {
+      await api('DELETE', `/comments/${id}`);
+      toast('Comment deleted');
+      loadComments();
+      loadPendingCount();
+    } catch(e) { toast('Failed: ' + e.message, true); }
+  }
+});
+
+// ── EDITOR ────────────────────────────────────────────────────────────────
 function setupEditorActions() {
-  document.getElementById('topbarActions').innerHTML = `
-    <button class="btn-sm btn-ghost" onclick="editingPostId=null;clearEditor()">+ New</button>`;
+  const btn = document.createElement('button');
+  btn.className = 'btn-sm btn-ghost';
+  btn.textContent = '+ New';
+  btn.addEventListener('click', () => { editingPostId = null; clearEditor(); });
+  document.getElementById('topbarActions').innerHTML = '';
+  document.getElementById('topbarActions').appendChild(btn);
 }
 
 function clearEditor() {
@@ -579,7 +619,6 @@ async function editPost(id) {
     document.getElementById('postTags').value = Array.isArray(post.tags) ? post.tags.join(', ') : (post.tags || '');
     document.getElementById('postStatus').value = post.status || 'draft';
     document.getElementById('postFeatured').checked = post.featured == 1;
-
     document.getElementById('pageTitle').textContent = '// Edit Post';
     navigateTo('new-post');
   } catch (err) {
@@ -587,7 +626,7 @@ async function editPost(id) {
   }
 }
 
-document.getElementById('savePostBtn').onclick = async () => {
+document.getElementById('savePostBtn').addEventListener('click', async () => {
   const title = document.getElementById('postTitle').value.trim();
   const excerpt = document.getElementById('postExcerpt').value.trim();
   const content = document.getElementById('postContent').value.trim();
@@ -611,12 +650,10 @@ document.getElementById('savePostBtn').onclick = async () => {
       toast('Post created!');
       clearEditor();
     }
-  } catch(e) {
-    toast('Save failed: ' + e.message, true);
-  }
-};
+  } catch(e) { toast('Save failed: ' + e.message, true); }
+});
 
-document.getElementById('clearPostBtn').onclick = () => { clearEditor(); };
+document.getElementById('clearPostBtn').addEventListener('click', () => clearEditor());
 
 document.querySelectorAll('.editor-tab').forEach(tab => {
   tab.addEventListener('click', () => {
@@ -631,19 +668,23 @@ document.querySelectorAll('.editor-tab').forEach(tab => {
   });
 });
 
+// ── COMMENTS ──────────────────────────────────────────────────────────────
 async function loadComments() {
-  allComments = await api('GET', '/comments/admin');
-  renderComments(allComments);
+  try {
+    allComments = await api('GET', '/comments/admin');
+    renderComments(allComments);
+  } catch(e) { toast('Failed to load comments: ' + e.message, true); }
 }
 
-function filterComments(filter) {
-  document.querySelectorAll('#page-comments .btn-sm').forEach(b => b.classList.remove('active'));
-  const map = { all: 'filterAll', pending: 'filterPending', approved: 'filterApproved' };
-  document.getElementById(map[filter])?.classList.add('active');
+document.getElementById('page-comments').addEventListener('click', e => {
+  const btn = e.target.closest('[data-filter]');
+  if (!btn) return;
+  const filter = btn.dataset.filter;
+  document.querySelectorAll('#page-comments [data-filter]').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
   const filtered = filter === 'all' ? allComments : allComments.filter(c => filter === 'pending' ? !c.approved : c.approved);
   renderComments(filtered);
-}
-window.filterComments = filterComments;
+});
 
 function renderComments(comments) {
   const el = document.getElementById('commentsList');
@@ -661,28 +702,12 @@ function renderComments(comments) {
       <div style="display:flex;align-items:center;justify-content:space-between">
         <span class="comment-post-link">On: ${c.post_title}</span>
         <div class="td-actions">
-          ${!c.approved ? `<button class="btn-sm btn-success" onclick="approveComment(${c.id})">Approve</button>` : ''}
-          <button class="btn-sm btn-danger" onclick="deleteComment(${c.id})">Delete</button>
+          ${!c.approved ? `<button class="btn-sm btn-success" data-action="approve-comment" data-id="${c.id}">Approve</button>` : ''}
+          <button class="btn-sm btn-danger" data-action="delete-comment" data-id="${c.id}">Delete</button>
         </div>
       </div>
     </div>`).join('');
 }
-
-async function approveComment(id) {
-  await api('PUT', `/comments/${id}/approve`);
-  toast('Comment approved');
-  loadComments();
-  loadPendingCount();
-}
-async function deleteComment(id) {
-  if (!confirm('Delete this comment?')) return;
-  await api('DELETE', `/comments/${id}`);
-  toast('Comment deleted');
-  loadComments();
-  loadPendingCount();
-}
-window.approveComment = approveComment;
-window.deleteComment = deleteComment;
 
 async function loadPendingCount() {
   const { count } = await api('GET', '/comments/admin/pending').catch(() => ({ count: 0 }));
@@ -691,14 +716,17 @@ async function loadPendingCount() {
   badge.textContent = count;
 }
 
+// ── SETTINGS ──────────────────────────────────────────────────────────────
 async function loadSettings() {
-  const s = await api('GET', '/settings');
-  Object.entries(s).forEach(([key, val]) => {
-    const el = document.getElementById('set-' + key);
-    if (!el) return;
-    if (el.type === 'checkbox') el.checked = val === 'true';
-    else el.value = val || '';
-  });
+  try {
+    const s = await api('GET', '/settings');
+    Object.entries(s).forEach(([key, val]) => {
+      const el = document.getElementById('set-' + key);
+      if (!el) return;
+      if (el.type === 'checkbox') el.checked = val === 'true';
+      else el.value = val || '';
+    });
+  } catch(e) { toast('Failed to load settings: ' + e.message, true); }
 }
 
 async function saveSettings() {
@@ -709,25 +737,28 @@ async function saveSettings() {
     if (!el) return;
     body[key] = el.type === 'checkbox' ? String(el.checked) : el.value;
   });
-  await api('PUT', '/settings', body);
-  toast('Settings saved!');
+  try {
+    await api('PUT', '/settings', body);
+    toast('Settings saved!');
+  } catch(e) { toast('Save failed: ' + e.message, true); }
 }
-window.saveSettings = saveSettings;
 
-async function changePassword() {
+document.getElementById('saveSettingsBtn').addEventListener('click', saveSettings);
+document.getElementById('saveProfileBtn').addEventListener('click', saveSettings);
+
+document.getElementById('changePasswordBtn').addEventListener('click', async () => {
   const current = document.getElementById('pwCurrent').value;
   const newPassword = document.getElementById('pwNew').value;
   if (!current || !newPassword) { toast('Both fields required', true); return; }
-  await api('PUT', '/auth/password', { current, newPassword });
-  document.getElementById('pwCurrent').value = '';
-  document.getElementById('pwNew').value = '';
-  toast('Password updated!');
-}
-window.changePassword = changePassword;
+  try {
+    await api('PUT', '/auth/password', { current, newPassword });
+    document.getElementById('pwCurrent').value = '';
+    document.getElementById('pwNew').value = '';
+    toast('Password updated!');
+  } catch(e) { toast('Failed: ' + e.message, true); }
+});
 
-window.editPost = editPost;
-window.deletePost = deletePost;
-
+// ── TOAST ─────────────────────────────────────────────────────────────────
 function toast(msg, error = false) {
   const el = document.getElementById('toast');
   el.textContent = (error ? '⚠ ' : '✔ ') + msg;
