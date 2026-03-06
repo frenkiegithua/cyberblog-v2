@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Admin Panel — CyberNotes</title>
+  <title>Admin Panel – CyberNotes</title>
   <meta name="robots" content="noindex, nofollow"/>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
@@ -232,12 +232,12 @@
       <!-- DASHBOARD -->
       <div class="page active" id="page-dashboard">
         <div class="stats-grid" id="statsGrid">
-          <div class="stat-card"><div class="stat-label">Total Posts</div><div class="stat-value green" id="s-total">—</div></div>
-          <div class="stat-card"><div class="stat-label">Published</div><div class="stat-value blue" id="s-published">—</div></div>
-          <div class="stat-card"><div class="stat-label">Drafts</div><div class="stat-value yellow" id="s-drafts">—</div></div>
-          <div class="stat-card"><div class="stat-label">Total Views</div><div class="stat-value green" id="s-views">—</div></div>
-          <div class="stat-card"><div class="stat-label">Comments</div><div class="stat-value blue" id="s-comments">—</div></div>
-          <div class="stat-card"><div class="stat-label">Pending</div><div class="stat-value red" id="s-pending">—</div></div>
+          <div class="stat-card"><div class="stat-label">Total Posts</div><div class="stat-value green" id="s-total">–</div></div>
+          <div class="stat-card"><div class="stat-label">Published</div><div class="stat-value blue" id="s-published">–</div></div>
+          <div class="stat-card"><div class="stat-label">Drafts</div><div class="stat-value yellow" id="s-drafts">–</div></div>
+          <div class="stat-card"><div class="stat-label">Total Views</div><div class="stat-value green" id="s-views">–</div></div>
+          <div class="stat-card"><div class="stat-label">Comments</div><div class="stat-value blue" id="s-comments">–</div></div>
+          <div class="stat-card"><div class="stat-label">Pending</div><div class="stat-value red" id="s-pending">–</div></div>
         </div>
         <div class="grid2">
           <div class="card"><div class="card-title">// Recent Posts</div><div id="recentPostsList"></div></div>
@@ -394,8 +394,7 @@
 <div class="toast" id="toast"></div>
 
 <script>
-// ── STATE ─────────────────────────────────────────────────────────────────
-// Admin can be served from Railway or Netlify — detect and use appropriate API
+// ── STATE ────────────────────────────────────────────────────────────────
 const API = '/api';
 let token = localStorage.getItem('cn_token') || '';
 let currentPage = 'dashboard';
@@ -580,24 +579,26 @@ function clearEditor() {
 
 async function editPost(id) {
   try {
-    const res = await fetch(`${API}/posts/admin/${id}`);
+    const res = await fetch(`${API}/posts/admin/${id}`, {
+      headers: { 'Authorization': 'Bearer ' + token }
+    });
     if (!res.ok) throw new Error('Failed to fetch post');
     const post = await res.json();
 
-    document.getElementById('post-id').value = post.id;
-    document.getElementById('post-title').value = post.title;
-    document.getElementById('post-slug').value = post.slug;
-    document.getElementById('post-excerpt').value = post.excerpt || '';
-    document.getElementById('post-content').value = post.content;
-    document.getElementById('post-category').value = post.category;
-    document.getElementById('post-tags').value = post.tags || '';
-    document.getElementById('post-status').value = post.status;
-    document.getElementById('post-featured').checked = post.featured == 1;
+    editingPostId = post.id;
+    document.getElementById('editPostId').value = post.id;
+    document.getElementById('postTitle').value = post.title || '';
+    document.getElementById('postExcerpt').value = post.excerpt || '';
+    document.getElementById('postContent').value = post.content || '';
+    document.getElementById('postCategory').value = post.category || '';
+    document.getElementById('postTags').value = post.tags || '';
+    document.getElementById('postStatus').value = post.status || 'draft';
+    document.getElementById('postFeatured').checked = post.featured == 1;
 
-    document.getElementById('form-title').textContent = 'Edit Post';
-    document.getElementById('post-form-section').scrollIntoView({ behavior: 'smooth' });
+    document.getElementById('pageTitle').textContent = '// Edit Post';
+    navigateTo('new-post');
   } catch (err) {
-    showToast('Error loading post: ' + err.message, 'error');
+    toast('Error loading post: ' + err.message, true);
   }
 }
 
@@ -740,10 +741,10 @@ window.changePassword = changePassword;
 window.editPost = editPost;
 window.deletePost = deletePost;
 
-// ── TOAST ──────────────────────────────────────────────────────────────────
+// ── TOAST ─────────────────────────────────────────────────────────────────
 function toast(msg, error = false) {
   const el = document.getElementById('toast');
-  el.textContent = (error ? '⚠ ' : '✓ ') + msg;
+  el.textContent = (error ? '⚠ ' : '✔ ') + msg;
   el.className = 'toast' + (error ? ' error' : '');
   el.classList.add('show');
   setTimeout(() => el.classList.remove('show'), 3000);
