@@ -39,7 +39,6 @@ app.use('/admin', express.static(path.join(__dirname, '../admin')));
 
 // Wait for DB before registering routes
 const fs = require('fs');
-const path = require('path');
 
 // Ensure data directory exists
 const dataDir = path.join(__dirname, 'data');
