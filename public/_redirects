@@ -1,0 +1,6 @@
+# Proxy API calls from Netlify frontend → Railway backend
+# This avoids CORS issues entirely by making API calls same-origin from the browser's perspective
+/api/*  https://cyberblog-v2-production.up.railway.app/api/:splat  200
+
+# SPA fallback — serve index.html for any unmatched routes
+/*  /index.html  200

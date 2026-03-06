@@ -41,45 +41,50 @@
   <div id="networking" style="margin-bottom:60px">
     <div class="section-header">
       <h2 class="section-title"><span class="post-cat cat-networking" style="font-size:1rem;padding:6px 14px">Networking</span></h2>
-      <span style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3)">1 post</span>
     </div>
-    <div id="cat-networking" class="posts-list"></div>
+    <div id="cat-networking" class="posts-list">
+      <p style="color:var(--text3);font-family:var(--font-mono);font-size:.85rem">// Loading...</p>
+    </div>
   </div>
 
   <!-- WEB SECURITY -->
   <div id="websec" style="margin-bottom:60px">
     <div class="section-header">
       <h2 class="section-title"><span class="post-cat cat-websec" style="font-size:1rem;padding:6px 14px">Web Security</span></h2>
-      <span style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3)">1 post</span>
     </div>
-    <div id="cat-websec" class="posts-list"></div>
+    <div id="cat-websec" class="posts-list">
+      <p style="color:var(--text3);font-family:var(--font-mono);font-size:.85rem">// Loading...</p>
+    </div>
   </div>
 
   <!-- TOOLS -->
   <div id="tools" style="margin-bottom:60px">
     <div class="section-header">
       <h2 class="section-title"><span class="post-cat cat-tools" style="font-size:1rem;padding:6px 14px">Tools</span></h2>
-      <span style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3)">2 posts</span>
     </div>
-    <div id="cat-tools" class="posts-list"></div>
+    <div id="cat-tools" class="posts-list">
+      <p style="color:var(--text3);font-family:var(--font-mono);font-size:.85rem">// Loading...</p>
+    </div>
   </div>
 
   <!-- TUTORIALS -->
   <div id="tutorials" style="margin-bottom:60px">
     <div class="section-header">
       <h2 class="section-title"><span class="post-cat cat-tutorials" style="font-size:1rem;padding:6px 14px">Tutorials</span></h2>
-      <span style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3)">1 post</span>
     </div>
-    <div id="cat-tutorials" class="posts-list"></div>
+    <div id="cat-tutorials" class="posts-list">
+      <p style="color:var(--text3);font-family:var(--font-mono);font-size:.85rem">// Loading...</p>
+    </div>
   </div>
 
   <!-- TIPS -->
   <div id="tips" style="margin-bottom:60px">
     <div class="section-header">
       <h2 class="section-title"><span class="post-cat cat-tips" style="font-size:1rem;padding:6px 14px">Tips & Tricks</span></h2>
-      <span style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3)">1 post</span>
     </div>
-    <div id="cat-tips" class="posts-list"></div>
+    <div id="cat-tips" class="posts-list">
+      <p style="color:var(--text3);font-family:var(--font-mono);font-size:.85rem">// Loading...</p>
+    </div>
   </div>
 
 </div>
@@ -90,30 +95,8 @@
   <p class="footer-mono">// All content for educational purposes only</p>
 </div></div></footer>
 
+<!-- Load api.js ONLY — its DOMContentLoaded handler calls renderCategoryPages() automatically -->
 <script src="../js/api.js"></script>
 <script src="../js/main.js"></script>
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  const cats = ['networking','websec','tools','tutorials','tips'];
-  cats.forEach(cat => {
-    const el = document.getElementById('cat-' + cat);
-    if (!el) return;
-    const posts = getPostsByCategory(cat);
-    if (!posts.length) { el.innerHTML = '<p style="color:var(--text3);font-family:var(--font-mono);font-size:.85rem">// No posts yet in this category.</p>'; return; }
-    el.innerHTML = posts.map((p, i) => {
-      const catClass = CAT_CLASSES[p.category] || '';
-      return `<a href="article.html?slug=${p.slug}" class="post-list-item">
-        <div class="post-list-num">${String(i+1).padStart(2,'0')}</div>
-        <div class="post-list-content">
-          <div class="post-meta" style="margin-bottom:8px"><span class="post-cat ${catClass}">${p.categoryLabel}</span><span class="post-date">${formatDate(p.date)}</span></div>
-          <h3>${p.title}</h3>
-          <p>${p.excerpt}</p>
-        </div>
-        <span class="read-time" style="margin-left:auto;flex-shrink:0">${p.readTime}</span>
-      </a>`;
-    }).join('');
-  });
-});
-</script>
 </body>
 </html>

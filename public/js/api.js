@@ -1,7 +1,12 @@
 // public/js/api.js — Frontend API client
-// Replaces static posts-data.js — fetches from the backend
 
-const API_BASE = 'https://cyberblog-v2-production.up.railway.app/api';
+// Dynamically resolve the backend URL.
+// - When served from Netlify (francisgithua.netlify.app) we need the full Railway URL.
+// - When served from Railway itself (admin panel) relative /api works fine.
+const RAILWAY_URL = 'https://cyberblog-v2-production.up.railway.app';
+const API_BASE = window.location.hostname.includes('railway.app')
+  ? '/api'
+  : RAILWAY_URL + '/api';
 
 async function fetchAPI(path) {
   const r = await fetch(API_BASE + path);
@@ -81,18 +86,18 @@ async function loadArticlePage() {
       initTOC();
     }
 
-    // Render stored comments
     renderCommentsList(post.comments, post.id);
 
-    // Comment form submission
     const form = document.getElementById('commentForm');
     if (form) {
       form.dataset.postId = post.id;
       form.addEventListener('submit', submitComment);
     }
   } catch (e) {
-    document.getElementById('articleTitle').textContent = 'Post not found';
-    document.getElementById('articleContent').innerHTML = `
+    const titleEl = document.getElementById('articleTitle');
+    const contentEl = document.getElementById('articleContent');
+    if (titleEl) titleEl.textContent = 'Post not found';
+    if (contentEl) contentEl.innerHTML = `
       <div class="callout warning">
         <span class="callout-icon">⚠</span>
         <div class="callout-content">
@@ -116,11 +121,12 @@ async function submitComment(e) {
   try {
     const btn = form.querySelector('[type=submit]');
     btn.disabled = true; btn.textContent = 'Posting...';
-    const data = await (await fetch('/api/comments', {
+    const res = await fetch(API_BASE + '/comments', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ post_id, name, email, body })
-    })).json();
+    });
+    const data = await res.json();
     btn.textContent = '✓ ' + (data.message || 'Posted!');
     form.reset();
     setTimeout(() => { btn.disabled = false; btn.textContent = 'Post Comment'; }, 3000);
@@ -159,10 +165,15 @@ async function renderCategoryPages() {
     const el = document.getElementById('cat-' + cat);
     if (!el) continue;
     try {
-      const { posts } = await fetchAPI(`/posts?category=${cat}&limit=20`);
-      if (!posts.length) { el.innerHTML = '<p style="color:var(--text3);font-family:var(--font-mono);font-size:.85rem">// No posts yet.</p>'; continue; }
+      const { posts } = await fetchAPI(`/posts?category=${cat}&limit=50`);
+      if (!posts.length) {
+        el.innerHTML = '<p style="color:var(--text3);font-family:var(--font-mono);font-size:.85rem">// No posts yet.</p>';
+        continue;
+      }
       el.innerHTML = posts.map((p, i) => buildListItem(p, i + 1)).join('');
-    } catch {}
+    } catch(e) {
+      el.innerHTML = `<p style="color:var(--text3);font-family:var(--font-mono);font-size:.85rem">// Failed to load: ${e.message}</p>`;
+    }
   }
 }
 
@@ -230,7 +241,6 @@ document.addEventListener('DOMContentLoaded', () => {
   if (path.endsWith('index.html') || path === '/' || path.endsWith('/')) renderFeaturedPosts();
   if (path.includes('blog.html')) {
     renderBlogPosts();
-    // Wire filter buttons
     document.querySelectorAll('.filter-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
