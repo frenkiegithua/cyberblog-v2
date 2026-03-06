@@ -395,9 +395,10 @@
 
 <script>
 // ── STATE ─────────────────────────────────────────────────────────────────
-// Admin is always served from Railway — use relative /api path.
-// This avoids CORS issues and hardcoded URLs.
-const API = '/api';
+// Admin can be served from Railway or Netlify — detect and use appropriate API
+const API = window.location.hostname.includes('netlify') 
+  ? 'https://cyberblog-v2-production.up.railway.app/api'
+  : '/api';
 let token = localStorage.getItem('cn_token') || '';
 let currentPage = 'dashboard';
 let allComments = [];
