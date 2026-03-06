@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="CyberNotes — Networking & Cybersecurity blog by Francis Githua. Deep dives into ethical hacking, network security, tools, and tutorials."/>
+  <meta name="keywords" content="cybersecurity, networking, ethical hacking, CCNA, Nmap, Wireshark, pentesting, Linux, security tutorials"/>
+  <meta name="author" content="Francis Githua"/>
+  <meta property="og:title" content="CyberNotes — Networking & Cybersecurity"/>
+  <meta property="og:description" content="Deep dives into ethical hacking, networking, and security tools."/>
+  <meta property="og:type" content="website"/>
+  <meta name="twitter:card" content="summary_large_image"/>
+  <link rel="canonical" href="https://francisgithua.netlify.app"/>
+  <link rel="alternate" type="application/rss+xml" title="CyberNotes RSS" href="/feed.xml"/>
+  <title>CyberNotes — Networking & Cybersecurity</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="navbar" id="navbar">
+  <div class="nav-inner">
+    <a href="index.html" class="logo">
+      <span class="logo-bracket">[</span>
+      <span class="logo-text">cyber<span class="accent">notes</span></span>
+      <span class="logo-bracket">]</span>
+    </a>
+    <button class="nav-toggle" id="navToggle" aria-label="Toggle menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="pages/blog.html">Blog</a></li>
+      <li><a href="pages/categories.html">Categories</a></li>
+      <li><a href="pages/resources.html">Resources</a></li>
+      <li><a href="pages/about.html">About</a></li>
+      <li><a href="pages/contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="search-btn" id="searchBtn" aria-label="Search">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+        <span class="icon-sun">☀</span>
+        <span class="icon-moon">◑</span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- SEARCH OVERLAY -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <div class="search-header">
+      <span class="search-label">// SEARCH POSTS</span>
+      <button class="search-close" id="searchClose">✕</button>
+    </div>
+    <input type="text" id="searchInput" placeholder="Type to search articles..." autocomplete="off"/>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-bg">
+    <div class="grid-overlay"></div>
+    <div class="scan-line"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="dot pulse"></span>
+      <span>Security Research &amp; Networking</span>
+    </div>
+    <h1 class="hero-title">
+      <span class="line1">Hack the</span>
+      <span class="line2">Planet<span class="cursor-blink">_</span></span>
+    </h1>
+    <p class="hero-subtitle">Deep dives into ethical hacking, network security,<br/>pentesting tools, and defensive strategies.</p>
+    <div class="hero-actions">
+      <a href="pages/blog.html" class="btn-primary">Read Articles</a>
+      <a href="pages/about.html" class="btn-ghost">About Me</a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat"><span class="stat-num">25+</span><span class="stat-label">Articles</span></div>
+      <div class="stat-divider">|</div>
+      <div class="stat"><span class="stat-num">5</span><span class="stat-label">Categories</span></div>
+      <div class="stat-divider">|</div>
+      <div class="stat"><span class="stat-num">CCNA</span><span class="stat-label">Certified</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- TICKER -->
+<div class="ticker-wrap">
+  <div class="ticker">
+    <span>NMAP</span><span class="sep">▸</span>
+    <span>WIRESHARK</span><span class="sep">▸</span>
+    <span>METASPLOIT</span><span class="sep">▸</span>
+    <span>GNS3</span><span class="sep">▸</span>
+    <span>PFSENSE</span><span class="sep">▸</span>
+    <span>BURP SUITE</span><span class="sep">▸</span>
+    <span>KALI LINUX</span><span class="sep">▸</span>
+    <span>OWASP TOP 10</span><span class="sep">▸</span>
+    <span>TCP/IP</span><span class="sep">▸</span>
+    <span>VLANs</span><span class="sep">▸</span>
+    <span>VPN</span><span class="sep">▸</span>
+    <span>TRYHACKME</span><span class="sep">▸</span>
+    <span>NMAP</span><span class="sep">▸</span>
+    <span>WIRESHARK</span><span class="sep">▸</span>
+    <span>METASPLOIT</span><span class="sep">▸</span>
+    <span>GNS3</span><span class="sep">▸</span>
+    <span>PFSENSE</span><span class="sep">▸</span>
+    <span>BURP SUITE</span><span class="sep">▸</span>
+    <span>KALI LINUX</span><span class="sep">▸</span>
+    <span>OWASP TOP 10</span><span class="sep">▸</span>
+  </div>
+</div>
+
+<!-- FEATURED POSTS -->
+<main>
+<section class="section">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title"><span class="prompt">$</span> latest_posts</h2>
+      <a href="pages/blog.html" class="view-all">View all →</a>
+    </div>
+    <div class="posts-grid" id="featuredPosts">
+      <!-- Injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- CATEGORIES -->
+<section class="section section-alt">
+  <div class="container">
+    <div class="section-header">
+      <h2 class="section-title"><span class="prompt">$</span> ls categories/</h2>
+    </div>
+    <div class="categories-grid">
+      <a href="pages/categories.html#networking" class="cat-card">
+        <div class="cat-icon">⬡</div>
+        <h3>Networking</h3>
+        <p>VLANs, routing, TCP/IP, GNS3 labs</p>
+        <span class="cat-count">8 posts</span>
+      </a>
+      <a href="pages/categories.html#websec" class="cat-card">
+        <div class="cat-icon">⚠</div>
+        <h3>Web Security</h3>
+        <p>SQLi, XSS, CSRF, OWASP Top 10</p>
+        <span class="cat-count">6 posts</span>
+      </a>
+      <a href="pages/categories.html#tools" class="cat-card">
+        <div class="cat-icon">⌘</div>
+        <h3>Tools</h3>
+        <p>Nmap, Wireshark, Metasploit, Burp</p>
+        <span class="cat-count">7 posts</span>
+      </a>
+      <a href="pages/categories.html#tutorials" class="cat-card">
+        <div class="cat-icon">▶</div>
+        <h3>Tutorials</h3>
+        <p>Step-by-step ethical hacking guides</p>
+        <span class="cat-count">5 posts</span>
+      </a>
+      <a href="pages/categories.html#tips" class="cat-card">
+        <div class="cat-icon">✦</div>
+        <h3>Tips &amp; Tricks</h3>
+        <p>Linux commands, productivity, shortcuts</p>
+        <span class="cat-count">4 posts</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER / RSS CTA -->
+<section class="section">
+  <div class="container">
+    <div class="cta-box">
+      <div class="cta-terminal">
+        <div class="terminal-bar">
+          <span class="t-dot red"></span>
+          <span class="t-dot yellow"></span>
+          <span class="t-dot green"></span>
+          <span class="t-title">subscribe.sh</span>
+        </div>
+        <div class="terminal-body">
+          <p><span class="prompt">$</span> curl -s https://cybernotes.dev/feed.xml</p>
+          <p class="t-comment"># Subscribe to the RSS feed for new posts</p>
+          <p><span class="prompt">$</span> <span class="blink-cursor">_</span></p>
+        </div>
+      </div>
+      <div class="cta-content">
+        <h3>Stay Updated</h3>
+        <p>Get notified when new security research and tutorials drop. Subscribe via RSS or follow on GitHub.</p>
+        <div class="cta-buttons">
+          <a href="/feed.xml" class="btn-primary">RSS Feed</a>
+          <a href="https://github.com/FrancisGithua" target="_blank" rel="noopener" class="btn-ghost">GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo"><span class="logo-bracket">[</span><span class="logo-text">cyber<span class="accent">notes</span></span><span class="logo-bracket">]</span></div>
+        <p>A cybersecurity & networking blog by Francis Githua. Documenting the journey from student to security engineer.</p>
+        <div class="social-links">
+          <a href="https://github.com/FrancisGithua" target="_blank" rel="noopener" aria-label="GitHub">GH</a>
+          <a href="https://tryhackme.com" target="_blank" rel="noopener" aria-label="TryHackMe">THM</a>
+          <a href="https://francisgithua.netlify.app" target="_blank" rel="noopener" aria-label="Portfolio">↗</a>
+        </div>
+      </div>
+      <div class="footer-links">
+        <h4>Pages</h4>
+        <ul>
+          <li><a href="index.html">Home</a></li>
+          <li><a href="pages/blog.html">Blog</a></li>
+          <li><a href="pages/categories.html">Categories</a></li>
+          <li><a href="pages/resources.html">Resources</a></li>
+          <li><a href="pages/about.html">About</a></li>
+          <li><a href="pages/contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Topics</h4>
+        <ul>
+          <li><a href="pages/categories.html#networking">Networking</a></li>
+          <li><a href="pages/categories.html#websec">Web Security</a></li>
+          <li><a href="pages/categories.html#tools">Tools</a></li>
+          <li><a href="pages/categories.html#tutorials">Tutorials</a></li>
+          <li><a href="pages/categories.html#tips">Tips & Tricks</a></li>
+        </ul>
+      </div>
+      <div class="footer-links">
+        <h4>Connect</h4>
+        <ul>
+          <li><a href="/feed.xml">RSS Feed</a></li>
+          <li><a href="/sitemap.xml">Sitemap</a></li>
+          <li><a href="https://github.com/FrancisGithua" target="_blank" rel="noopener">GitHub</a></li>
+          <li><a href="https://tryhackme.com" target="_blank" rel="noopener">TryHackMe</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2025 Francis Githua — CyberNotes. Built with ❤️ and ☕</p>
+      <p class="footer-mono">// All content for educational purposes only</p>
+    </div>
+  </div>
+</footer>
+
+<script src="js/api.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

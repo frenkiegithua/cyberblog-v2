@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Cybersecurity and networking learning resources curated by Francis Githua."/>
+  <title>Resources — CyberNotes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+<nav class="navbar"><div class="nav-inner">
+  <a href="../index.html" class="logo"><span class="logo-bracket">[</span><span class="logo-text">cyber<span class="accent">notes</span></span><span class="logo-bracket">]</span></a>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="../index.html">Home</a></li><li><a href="blog.html">Blog</a></li>
+    <li><a href="categories.html">Categories</a></li>
+    <li><a href="resources.html" class="active">Resources</a></li>
+    <li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="search-btn" id="searchBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+    <button class="theme-toggle" id="themeToggle"><span class="icon-sun">☀</span><span class="icon-moon">◑</span></button>
+  </div>
+</div></nav>
+
+<div class="search-overlay" id="searchOverlay"><div class="search-box">
+  <div class="search-header"><span class="search-label">// SEARCH</span><button class="search-close" id="searchClose">✕</button></div>
+  <input type="text" id="searchInput" placeholder="Search..."/><div class="search-results" id="searchResults"></div>
+</div></div>
+
+<div class="page-hero"><div class="container">
+  <div class="hero-badge" style="margin-bottom:16px"><span class="dot pulse"></span><span>Learning Resources</span></div>
+  <h1><span class="prompt">$</span> cat resources.md</h1>
+  <p>Curated list of the best tools, platforms, books, and websites for learning cybersecurity and networking.</p>
+</div></div>
+
+<main>
+<div class="container" style="padding:60px 0">
+
+  <div style="margin-bottom:56px">
+    <h2 class="section-title" style="margin-bottom:24px"><span class="prompt">$</span> Practicing Platforms</h2>
+    <div class="resources-grid">
+      <a href="https://tryhackme.com" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Platform · Free / Paid</div>
+        <h3>TryHackMe</h3>
+        <p>Guided learning paths for beginners to advanced. Covers web hacking, networking, OSINT, and more. Best place to start.</p>
+      </a>
+      <a href="https://hackthebox.com" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Platform · Free / Paid</div>
+        <h3>Hack The Box</h3>
+        <p>Real-world penetration testing challenges and labs. More advanced than TryHackMe. Great for CTF prep.</p>
+      </a>
+      <a href="https://portswigger.net/web-security" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Platform · Free</div>
+        <h3>PortSwigger Web Academy</h3>
+        <p>The definitive resource for web application security. Labs covering every OWASP vulnerability. Made by the creators of Burp Suite.</p>
+      </a>
+      <a href="https://overthewire.org/wargames/" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Platform · Free</div>
+        <h3>OverTheWire</h3>
+        <p>Classic wargames for learning Linux, networking, and security fundamentals through challenges. Start with Bandit.</p>
+      </a>
+      <a href="https://picoctf.org" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">CTF · Free</div>
+        <h3>picoCTF</h3>
+        <p>Beginner-friendly CTF competition by Carnegie Mellon University. Great for learning the fundamentals of security challenges.</p>
+      </a>
+      <a href="https://vulnhub.com" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Platform · Free</div>
+        <h3>VulnHub</h3>
+        <p>Download vulnerable virtual machines to practice on locally. No internet needed — perfect for offline lab practice.</p>
+      </a>
+    </div>
+  </div>
+
+  <div style="margin-bottom:56px">
+    <h2 class="section-title" style="margin-bottom:24px"><span class="prompt">$</span> Essential Tools</h2>
+    <div class="resources-grid">
+      <a href="https://nmap.org" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Tool · Free / Open Source</div>
+        <h3>Nmap</h3>
+        <p>The essential network scanner. Host discovery, port scanning, service detection, OS fingerprinting, and scripting.</p>
+      </a>
+      <a href="https://www.wireshark.org" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Tool · Free / Open Source</div>
+        <h3>Wireshark</h3>
+        <p>The world's foremost network protocol analyzer. Capture and analyze network traffic in real time.</p>
+      </a>
+      <a href="https://portswigger.net/burp" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Tool · Free / Paid</div>
+        <h3>Burp Suite</h3>
+        <p>The standard tool for web application security testing. Intercept, modify, and replay HTTP requests.</p>
+      </a>
+      <a href="https://www.metasploit.com" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Tool · Free / Open Source</div>
+        <h3>Metasploit Framework</h3>
+        <p>The world's most used penetration testing framework. Thousands of exploits, payloads, and post-exploitation modules.</p>
+      </a>
+      <a href="https://www.gns3.com" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Tool · Free / Open Source</div>
+        <h3>GNS3</h3>
+        <p>Network simulation software for building and testing virtual networks. Run real Cisco IOS images in your lab.</p>
+      </a>
+      <a href="https://www.pfsense.org" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Tool · Free / Open Source</div>
+        <h3>pfSense</h3>
+        <p>Open-source firewall and router. Perfect for building a home lab firewall with real enterprise features.</p>
+      </a>
+    </div>
+  </div>
+
+  <div style="margin-bottom:56px">
+    <h2 class="section-title" style="margin-bottom:24px"><span class="prompt">$</span> Learning Resources</h2>
+    <div class="resources-grid">
+      <a href="https://owasp.org" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Website · Free</div>
+        <h3>OWASP</h3>
+        <p>The Open Web Application Security Project. Source of the OWASP Top 10, testing guides, and security checklists.</p>
+      </a>
+      <a href="https://www.cybrary.it" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Courses · Free / Paid</div>
+        <h3>Cybrary</h3>
+        <p>Free cybersecurity courses covering ethical hacking, network security, incident response, and certifications prep.</p>
+      </a>
+      <a href="https://www.cisco.com/c/en/us/training-events/training-certifications/certifications/associate/ccna.html" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Certification · Paid</div>
+        <h3>Cisco CCNA</h3>
+        <p>The gold standard entry-level networking certification. Covers routing, switching, security, and automation fundamentals.</p>
+      </a>
+      <a href="https://www.youtube.com/@NetworkChuck" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">YouTube · Free</div>
+        <h3>NetworkChuck</h3>
+        <p>Engaging videos on networking, hacking, Linux, and certifications. Great entry point for beginners.</p>
+      </a>
+      <a href="https://www.sans.org/reading-room/" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Reading Room · Free</div>
+        <h3>SANS Reading Room</h3>
+        <p>Thousands of free whitepapers and research papers on every aspect of information security and networking.</p>
+      </a>
+      <a href="https://www.exploit-db.com" target="_blank" rel="noopener" class="resource-card">
+        <div class="resource-type">Database · Free</div>
+        <h3>Exploit-DB</h3>
+        <p>Maintained by Offensive Security. Archive of public exploits and vulnerable software for research purposes.</p>
+      </a>
+    </div>
+  </div>
+
+</div>
+</main>
+
+<footer class="footer"><div class="container"><div class="footer-bottom">
+  <p>© 2025 Francis Githua — CyberNotes</p>
+  <p class="footer-mono">// All content for educational purposes only</p>
+</div></div></footer>
+
+<script src="../js/posts-data.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

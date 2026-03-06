@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="All articles on CyberNotes — Networking & Cybersecurity blog by Francis Githua."/>
+  <title>Blog — CyberNotes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="logo"><span class="logo-bracket">[</span><span class="logo-text">cyber<span class="accent">notes</span></span><span class="logo-bracket">]</span></a>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="blog.html" class="active">Blog</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="search-btn" id="searchBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="theme-toggle" id="themeToggle"><span class="icon-sun">☀</span><span class="icon-moon">◑</span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <div class="search-header"><span class="search-label">// SEARCH POSTS</span><button class="search-close" id="searchClose">✕</button></div>
+    <input type="text" id="searchInput" placeholder="Type to search articles..." autocomplete="off"/>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<div class="page-hero">
+  <div class="container">
+    <div class="hero-badge" style="margin-bottom:16px"><span class="dot pulse"></span><span>All Articles</span></div>
+    <h1><span class="prompt">$</span> ls -la /blog/</h1>
+    <p>All published articles on networking, cybersecurity, tools, and tutorials.</p>
+  </div>
+</div>
+
+<main>
+  <div class="container">
+    <div class="blog-layout">
+      <!-- POSTS -->
+      <div>
+        <div id="postsList" class="posts-list"></div>
+        <div id="pagination" class="pagination"></div>
+      </div>
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-widget">
+          <h3>// Filter by Category</h3>
+          <div class="filter-btns">
+            <button class="filter-btn active" data-cat="all">All Posts <span class="filter-count">6</span></button>
+            <button class="filter-btn" data-cat="networking">Networking <span class="filter-count">1</span></button>
+            <button class="filter-btn" data-cat="websec">Web Security <span class="filter-count">1</span></button>
+            <button class="filter-btn" data-cat="tools">Tools <span class="filter-count">2</span></button>
+            <button class="filter-btn" data-cat="tutorials">Tutorials <span class="filter-count">1</span></button>
+            <button class="filter-btn" data-cat="tips">Tips & Tricks <span class="filter-count">1</span></button>
+          </div>
+        </div>
+        <div class="sidebar-widget">
+          <h3>// Tags</h3>
+          <div class="sidebar-tags">
+            <span class="sidebar-tag">#nmap</span>
+            <span class="sidebar-tag">#wireshark</span>
+            <span class="sidebar-tag">#linux</span>
+            <span class="sidebar-tag">#owasp</span>
+            <span class="sidebar-tag">#sqli</span>
+            <span class="sidebar-tag">#xss</span>
+            <span class="sidebar-tag">#cisco</span>
+            <span class="sidebar-tag">#vlan</span>
+            <span class="sidebar-tag">#ccna</span>
+            <span class="sidebar-tag">#gns3</span>
+            <span class="sidebar-tag">#metasploit</span>
+            <span class="sidebar-tag">#networking</span>
+            <span class="sidebar-tag">#pentesting</span>
+          </div>
+        </div>
+        <div class="sidebar-widget">
+          <h3>// Subscribe</h3>
+          <p style="font-size:.8rem;color:var(--text2);margin-bottom:12px">Get new posts via RSS feed.</p>
+          <a href="../feed.xml" class="btn-primary" style="font-size:.8rem;padding:8px 16px">RSS Feed</a>
+        </div>
+      </aside>
+    </div>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2025 Francis Githua — CyberNotes</p>
+      <p class="footer-mono">// All content for educational purposes only</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/api.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

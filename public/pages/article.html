@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="CyberNotes article — Networking & Cybersecurity by Francis Githua"/>
+  <title>Article — CyberNotes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-inner">
+    <a href="../index.html" class="logo"><span class="logo-bracket">[</span><span class="logo-text">cyber<span class="accent">notes</span></span><span class="logo-bracket">]</span></a>
+    <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+    <ul class="nav-links" id="navLinks">
+      <li><a href="../index.html">Home</a></li>
+      <li><a href="blog.html">Blog</a></li>
+      <li><a href="categories.html">Categories</a></li>
+      <li><a href="resources.html">Resources</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="search-btn" id="searchBtn">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+      </button>
+      <button class="theme-toggle" id="themeToggle"><span class="icon-sun">☀</span><span class="icon-moon">◑</span></button>
+    </div>
+  </div>
+</nav>
+
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-box">
+    <div class="search-header"><span class="search-label">// SEARCH POSTS</span><button class="search-close" id="searchClose">✕</button></div>
+    <input type="text" id="searchInput" placeholder="Type to search articles..."/>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+
+<!-- ARTICLE HEADER -->
+<div class="article-header">
+  <div class="container">
+    <a href="blog.html" style="font-family:var(--font-mono);font-size:.8rem;color:var(--text3);display:inline-flex;align-items:center;gap:6px;margin-bottom:24px;">← Back to Blog</a>
+    <div class="post-meta" id="articleMeta"></div>
+    <h1 class="article-title" id="articleTitle">Loading...</h1>
+  </div>
+</div>
+
+<!-- ARTICLE BODY -->
+<main>
+  <div class="container">
+    <div class="article-layout">
+      <div>
+        <div class="article-content" id="articleContent">
+          <!-- Content injected by article-content.js -->
+        </div>
+
+        <!-- AUTHOR BIO -->
+        <div class="author-card">
+          <div class="author-avatar">FG</div>
+          <div class="author-info">
+            <h3>Francis Githua</h3>
+            <p class="author-handle">@FrancisGithua</p>
+            <p class="author-bio">Computer Science student at Kirinyaga University, specializing in Networking & Security. Pursuing CCNA certification. Passionate about ethical hacking, network engineering, and building security tools. Active on TryHackMe.</p>
+            <div class="author-links">
+              <a href="https://github.com/FrancisGithua" target="_blank" class="author-link">GitHub →</a>
+              <a href="https://tryhackme.com" target="_blank" class="author-link">TryHackMe →</a>
+              <a href="https://francisgithua.netlify.app" target="_blank" class="author-link">Portfolio →</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- COMMENTS -->
+        <div class="comments-section">
+          <h3>// Comments</h3>
+          <div class="comment-form">
+            <h4>// Leave a Comment</h4>
+            <form id="commentForm">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="cName">Name *</label>
+                  <input type="text" id="cName" class="form-input" placeholder="Your name" required/>
+                </div>
+                <div class="form-group">
+                  <label for="cEmail">Email (optional)</label>
+                  <input type="email" id="cEmail" class="form-input" placeholder="your@email.com"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="cText">Comment *</label>
+                <textarea id="cText" class="form-textarea" placeholder="Share your thoughts, questions, or corrections..." required></textarea>
+              </div>
+              <div class="form-submit">
+                <button type="submit" class="btn-primary">Post Comment</button>
+              </div>
+            </form>
+          </div>
+          <div id="commentsList"></div>
+        </div>
+      </div>
+
+      <!-- TOC SIDEBAR -->
+      <aside class="toc-sidebar">
+        <div class="toc">
+          <h3>// Table of Contents</h3>
+          <ul id="tocList"></ul>
+        </div>
+        <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:20px;">
+          <p style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3);margin-bottom:12px;text-transform:uppercase;letter-spacing:.1em">// Share</p>
+          <button onclick="navigator.clipboard.writeText(window.location.href).then(()=>this.textContent='✓ Copied!')" class="btn-ghost" style="width:100%;justify-content:center;font-size:.8rem">Copy Link</button>
+        </div>
+      </aside>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-bottom">
+      <p>© 2025 Francis Githua — CyberNotes</p>
+      <p class="footer-mono">// All content for educational purposes only</p>
+    </div>
+  </div>
+</footer>
+
+<script src="../js/api.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

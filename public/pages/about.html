@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="About Francis Githua — Computer Science student, network engineering & cybersecurity enthusiast."/>
+  <title>About — CyberNotes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+<nav class="navbar"><div class="nav-inner">
+  <a href="../index.html" class="logo"><span class="logo-bracket">[</span><span class="logo-text">cyber<span class="accent">notes</span></span><span class="logo-bracket">]</span></a>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="../index.html">Home</a></li><li><a href="blog.html">Blog</a></li>
+    <li><a href="categories.html">Categories</a></li><li><a href="resources.html">Resources</a></li>
+    <li><a href="about.html" class="active">About</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="search-btn" id="searchBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+    <button class="theme-toggle" id="themeToggle"><span class="icon-sun">☀</span><span class="icon-moon">◑</span></button>
+  </div>
+</div></nav>
+
+<div class="search-overlay" id="searchOverlay"><div class="search-box">
+  <div class="search-header"><span class="search-label">// SEARCH</span><button class="search-close" id="searchClose">✕</button></div>
+  <input type="text" id="searchInput" placeholder="Search articles..."/><div class="search-results" id="searchResults"></div>
+</div></div>
+
+<main>
+<div class="container about-hero">
+  <div class="about-grid">
+    <!-- MAIN CONTENT -->
+    <div>
+      <div class="hero-badge" style="margin-bottom:20px"><span class="dot pulse"></span><span>About Me</span></div>
+      <h1 style="font-size:clamp(2rem,5vw,3.5rem);font-weight:800;margin-bottom:20px">Francis Githua</h1>
+      <p style="font-family:var(--font-mono);color:var(--accent);margin-bottom:24px">Computer Science Student · Network Engineer · Security Enthusiast</p>
+
+      <p style="color:var(--text2);margin-bottom:20px;line-height:1.8">Hey! I'm Francis — a Computer Science student at <strong>Kirinyaga University</strong>, Kenya, focusing on Networking and Cybersecurity. I started CyberNotes to document my learning journey and share practical knowledge about network engineering and ethical hacking.</p>
+
+      <p style="color:var(--text2);margin-bottom:20px;line-height:1.8">I'm currently pursuing my <strong>CCNA certification</strong> and actively building skills through hands-on practice — setting up GNS3 labs, experimenting with pfSense firewalls, and hacking machines on <strong>TryHackMe</strong>.</p>
+
+      <p style="color:var(--text2);margin-bottom:40px;line-height:1.8">My philosophy: the best way to understand security is to think like an attacker — ethically and responsibly. Everything on this blog is for educational purposes, aimed at helping students and professionals level up their skills.</p>
+
+      <h2 style="font-size:1.3rem;margin-bottom:20px;font-family:var(--font-mono)"><span style="color:var(--accent)">$</span> cat skills.txt</h2>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-bottom:40px">
+        <div>
+          <h3 style="font-family:var(--font-mono);font-size:.8rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">// Networking</h3>
+          <ul class="skills-list">
+            <li>TCP/IP & OSI Model</li>
+            <li>VLANs & Trunking</li>
+            <li>Routing (OSPF, EIGRP, BGP)</li>
+            <li>Firewalls & pfSense</li>
+            <li>VPN Configuration</li>
+            <li>GNS3 Lab Setup</li>
+          </ul>
+        </div>
+        <div>
+          <h3 style="font-family:var(--font-mono);font-size:.8rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">// Security</h3>
+          <ul class="skills-list">
+            <li>Network Scanning (Nmap)</li>
+            <li>Packet Analysis (Wireshark)</li>
+            <li>Web App Pentesting</li>
+            <li>OWASP Top 10</li>
+            <li>Metasploit Framework</li>
+            <li>Burp Suite</li>
+          </ul>
+        </div>
+      </div>
+
+      <h2 style="font-size:1.3rem;margin-bottom:20px;font-family:var(--font-mono)"><span style="color:var(--accent)">$</span> cat journey.log</h2>
+      <div style="border-left:2px solid var(--border2);padding-left:24px">
+        <div style="margin-bottom:28px;position:relative">
+          <div style="position:absolute;left:-31px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--bg)"></div>
+          <p style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3);margin-bottom:4px">2025 — Present</p>
+          <h4 style="margin-bottom:6px">Pursuing CCNA Certification</h4>
+          <p style="font-size:.875rem;color:var(--text2)">Deep diving into Cisco networking, VLANs, routing protocols, and network security.</p>
+        </div>
+        <div style="margin-bottom:28px;position:relative">
+          <div style="position:absolute;left:-31px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--accent2);border:2px solid var(--bg)"></div>
+          <p style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3);margin-bottom:4px">2024</p>
+          <h4 style="margin-bottom:6px">Started TryHackMe Journey</h4>
+          <p style="font-size:.875rem;color:var(--text2)">Completed multiple learning paths in ethical hacking, web security, and network fundamentals.</p>
+        </div>
+        <div style="margin-bottom:28px;position:relative">
+          <div style="position:absolute;left:-31px;top:4px;width:12px;height:12px;border-radius:50%;background:var(--accent4);border:2px solid var(--bg)"></div>
+          <p style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3);margin-bottom:4px">2022 — Present</p>
+          <h4 style="margin-bottom:6px">Kirinyaga University — BSc Computer Science</h4>
+          <p style="font-size:.875rem;color:var(--text2)">Specializing in Networking and Information Security. Active in technical clubs and projects.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SIDEBAR PROFILE -->
+    <div>
+      <div class="profile-card">
+        <div class="profile-avatar">FG</div>
+        <h2 class="profile-name">Francis Githua</h2>
+        <p class="profile-role">@FrancisGithua</p>
+        <div class="profile-badges">
+          <span class="badge">CCNA (in progress)</span>
+          <span class="badge">TryHackMe</span>
+          <span class="badge">Kirinyaga Uni</span>
+          <span class="badge">Kali Linux</span>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:8px">
+          <a href="https://francisgithua.netlify.app" target="_blank" class="btn-primary" style="justify-content:center">Portfolio →</a>
+          <a href="https://github.com/FrancisGithua" target="_blank" class="btn-ghost" style="justify-content:center">GitHub</a>
+          <a href="https://tryhackme.com" target="_blank" class="btn-ghost" style="justify-content:center">TryHackMe</a>
+        </div>
+      </div>
+
+      <div style="background:var(--card-bg);border:1px solid var(--border);border-radius:var(--radius);padding:20px;margin-top:20px">
+        <h3 style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:16px">// Tools I Use</h3>
+        <div style="display:flex;flex-wrap:wrap;gap:8px">
+          <span class="badge">Nmap</span><span class="badge">Wireshark</span>
+          <span class="badge">Burp Suite</span><span class="badge">Metasploit</span>
+          <span class="badge">GNS3</span><span class="badge">pfSense</span>
+          <span class="badge">Kali Linux</span><span class="badge">VirtualBox</span>
+          <span class="badge">VS Code</span><span class="badge">Git</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</main>
+
+<footer class="footer"><div class="container"><div class="footer-bottom">
+  <p>© 2025 Francis Githua — CyberNotes</p>
+  <p class="footer-mono">// All content for educational purposes only</p>
+</div></div></footer>
+
+<script src="../js/posts-data.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

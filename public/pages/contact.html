@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Contact Francis Githua — CyberNotes blog author."/>
+  <title>Contact — CyberNotes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+<nav class="navbar"><div class="nav-inner">
+  <a href="../index.html" class="logo"><span class="logo-bracket">[</span><span class="logo-text">cyber<span class="accent">notes</span></span><span class="logo-bracket">]</span></a>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="../index.html">Home</a></li><li><a href="blog.html">Blog</a></li>
+    <li><a href="categories.html">Categories</a></li><li><a href="resources.html">Resources</a></li>
+    <li><a href="about.html">About</a></li><li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="search-btn" id="searchBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+    <button class="theme-toggle" id="themeToggle"><span class="icon-sun">☀</span><span class="icon-moon">◑</span></button>
+  </div>
+</div></nav>
+
+<div class="search-overlay" id="searchOverlay"><div class="search-box">
+  <div class="search-header"><span class="search-label">// SEARCH</span><button class="search-close" id="searchClose">✕</button></div>
+  <input type="text" id="searchInput" placeholder="Search..."/><div class="search-results" id="searchResults"></div>
+</div></div>
+
+<div class="page-hero"><div class="container">
+  <div class="hero-badge" style="margin-bottom:16px"><span class="dot pulse"></span><span>Get In Touch</span></div>
+  <h1><span class="prompt">$</span> ./contact.sh</h1>
+  <p>Have a question, correction, or collaboration idea? Let's talk.</p>
+</div></div>
+
+<main>
+<div class="container">
+<div class="contact-grid">
+  <div class="contact-info">
+    <h2>Say Hello</h2>
+    <p style="color:var(--text2);margin-bottom:24px">Whether you want to discuss a blog post, report an error, suggest a topic, or collaborate on a project — I'm always happy to hear from the community.</p>
+
+    <div class="contact-item">
+      <span>@</span>
+      <div>
+        <div style="font-weight:600;margin-bottom:2px">Email</div>
+        <a href="mailto:francis@cybernotes.dev" style="font-size:.85rem;color:var(--text3)">francis@cybernotes.dev</a>
+      </div>
+    </div>
+    <div class="contact-item">
+      <span>GH</span>
+      <div>
+        <div style="font-weight:600;margin-bottom:2px">GitHub</div>
+        <a href="https://github.com/FrancisGithua" target="_blank" style="font-size:.85rem;color:var(--text3)">github.com/FrancisGithua</a>
+      </div>
+    </div>
+    <div class="contact-item">
+      <span>THM</span>
+      <div>
+        <div style="font-weight:600;margin-bottom:2px">TryHackMe</div>
+        <a href="https://tryhackme.com" target="_blank" style="font-size:.85rem;color:var(--text3)">TryHackMe Profile</a>
+      </div>
+    </div>
+    <div class="contact-item">
+      <span>↗</span>
+      <div>
+        <div style="font-weight:600;margin-bottom:2px">Portfolio</div>
+        <a href="https://francisgithua.netlify.app" target="_blank" style="font-size:.85rem;color:var(--text3)">francisgithua.netlify.app</a>
+      </div>
+    </div>
+
+    <div style="margin-top:32px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:20px">
+      <p style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px">// Response Time</p>
+      <p style="font-size:.875rem;color:var(--text2)">I typically reply within <strong>24–48 hours</strong>. For bug reports or corrections on articles, please include the article title and the specific issue.</p>
+    </div>
+  </div>
+
+  <div>
+    <div class="contact-form">
+      <h3 style="font-family:var(--font-mono);font-size:.85rem;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px">// Send a Message</h3>
+      <form id="contactForm">
+        <div class="form-row" style="margin-bottom:12px">
+          <div class="form-group">
+            <label class="form-group label">Name *</label>
+            <input type="text" class="form-input" placeholder="Your name" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-group label">Email *</label>
+            <input type="email" class="form-input" placeholder="your@email.com" required/>
+          </div>
+        </div>
+        <div class="form-group" style="margin-bottom:12px">
+          <label class="form-group label">Subject</label>
+          <input type="text" class="form-input" placeholder="Article feedback, question, collaboration..."/>
+        </div>
+        <div class="form-group" style="margin-bottom:16px">
+          <label class="form-group label">Message *</label>
+          <textarea class="form-textarea" style="min-height:150px" placeholder="Write your message here..." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="width:100%;justify-content:center" onclick="this.form.onsubmit=undefined;this.textContent='✓ Message Sent!';this.style.background='var(--accent)';return false">Send Message</button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+</main>
+
+<footer class="footer"><div class="container"><div class="footer-bottom">
+  <p>© 2025 Francis Githua — CyberNotes</p>
+  <p class="footer-mono">// All content for educational purposes only</p>
+</div></div></footer>
+
+<script src="../js/posts-data.js"></script>
+<script src="../js/main.js"></script>
+</body>
+</html>

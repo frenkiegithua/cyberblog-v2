@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8"/><meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="description" content="Browse articles by category on CyberNotes — Networking, Web Security, Tools, Tutorials, Tips."/>
+  <title>Categories — CyberNotes</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="../css/style.css"/>
+</head>
+<body>
+<nav class="navbar"><div class="nav-inner">
+  <a href="../index.html" class="logo"><span class="logo-bracket">[</span><span class="logo-text">cyber<span class="accent">notes</span></span><span class="logo-bracket">]</span></a>
+  <button class="nav-toggle" id="navToggle"><span></span><span></span><span></span></button>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="../index.html">Home</a></li><li><a href="blog.html">Blog</a></li>
+    <li><a href="categories.html" class="active">Categories</a></li>
+    <li><a href="resources.html">Resources</a></li><li><a href="about.html">About</a></li><li><a href="contact.html">Contact</a></li>
+  </ul>
+  <div class="nav-actions">
+    <button class="search-btn" id="searchBtn"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></button>
+    <button class="theme-toggle" id="themeToggle"><span class="icon-sun">☀</span><span class="icon-moon">◑</span></button>
+  </div>
+</div></nav>
+
+<div class="search-overlay" id="searchOverlay"><div class="search-box">
+  <div class="search-header"><span class="search-label">// SEARCH POSTS</span><button class="search-close" id="searchClose">✕</button></div>
+  <input type="text" id="searchInput" placeholder="Type to search..."/><div class="search-results" id="searchResults"></div>
+</div></div>
+
+<div class="page-hero"><div class="container">
+  <div class="hero-badge" style="margin-bottom:16px"><span class="dot pulse"></span><span>Browse by Topic</span></div>
+  <h1><span class="prompt">$</span> ls -la /categories/</h1>
+  <p>Filter articles by topic area.</p>
+</div></div>
+
+<main>
+<div class="container" style="padding:60px 0">
+
+  <!-- NETWORKING -->
+  <div id="networking" style="margin-bottom:60px">
+    <div class="section-header">
+      <h2 class="section-title"><span class="post-cat cat-networking" style="font-size:1rem;padding:6px 14px">Networking</span></h2>
+      <span style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3)">1 post</span>
+    </div>
+    <div id="cat-networking" class="posts-list"></div>
+  </div>
+
+  <!-- WEB SECURITY -->
+  <div id="websec" style="margin-bottom:60px">
+    <div class="section-header">
+      <h2 class="section-title"><span class="post-cat cat-websec" style="font-size:1rem;padding:6px 14px">Web Security</span></h2>
+      <span style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3)">1 post</span>
+    </div>
+    <div id="cat-websec" class="posts-list"></div>
+  </div>
+
+  <!-- TOOLS -->
+  <div id="tools" style="margin-bottom:60px">
+    <div class="section-header">
+      <h2 class="section-title"><span class="post-cat cat-tools" style="font-size:1rem;padding:6px 14px">Tools</span></h2>
+      <span style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3)">2 posts</span>
+    </div>
+    <div id="cat-tools" class="posts-list"></div>
+  </div>
+
+  <!-- TUTORIALS -->
+  <div id="tutorials" style="margin-bottom:60px">
+    <div class="section-header">
+      <h2 class="section-title"><span class="post-cat cat-tutorials" style="font-size:1rem;padding:6px 14px">Tutorials</span></h2>
+      <span style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3)">1 post</span>
+    </div>
+    <div id="cat-tutorials" class="posts-list"></div>
+  </div>
+
+  <!-- TIPS -->
+  <div id="tips" style="margin-bottom:60px">
+    <div class="section-header">
+      <h2 class="section-title"><span class="post-cat cat-tips" style="font-size:1rem;padding:6px 14px">Tips & Tricks</span></h2>
+      <span style="font-family:var(--font-mono);font-size:.75rem;color:var(--text3)">1 post</span>
+    </div>
+    <div id="cat-tips" class="posts-list"></div>
+  </div>
+
+</div>
+</main>
+
+<footer class="footer"><div class="container"><div class="footer-bottom">
+  <p>© 2025 Francis Githua — CyberNotes</p>
+  <p class="footer-mono">// All content for educational purposes only</p>
+</div></div></footer>
+
+<script src="../js/api.js"></script>
+<script src="../js/main.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const cats = ['networking','websec','tools','tutorials','tips'];
+  cats.forEach(cat => {
+    const el = document.getElementById('cat-' + cat);
+    if (!el) return;
+    const posts = getPostsByCategory(cat);
+    if (!posts.length) { el.innerHTML = '<p style="color:var(--text3);font-family:var(--font-mono);font-size:.85rem">// No posts yet in this category.</p>'; return; }
+    el.innerHTML = posts.map((p, i) => {
+      const catClass = CAT_CLASSES[p.category] || '';
+      return `<a href="article.html?slug=${p.slug}" class="post-list-item">
+        <div class="post-list-num">${String(i+1).padStart(2,'0')}</div>
+        <div class="post-list-content">
+          <div class="post-meta" style="margin-bottom:8px"><span class="post-cat ${catClass}">${p.categoryLabel}</span><span class="post-date">${formatDate(p.date)}</span></div>
+          <h3>${p.title}</h3>
+          <p>${p.excerpt}</p>
+        </div>
+        <span class="read-time" style="margin-left:auto;flex-shrink:0">${p.readTime}</span>
+      </a>`;
+    }).join('');
+  });
+});
+</script>
+</body>
+</html>
