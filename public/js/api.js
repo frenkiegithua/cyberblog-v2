@@ -1,7 +1,7 @@
 // public/js/api.js — Frontend API client
 // Replaces static posts-data.js — fetches from the backend
 
-const API_BASE = '/api';
+const API_BASE = 'https://cyberblog-v2-production.up.railway.app/api';
 
 async function fetchAPI(path) {
   const r = await fetch(API_BASE + path);
