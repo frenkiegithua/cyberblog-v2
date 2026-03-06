@@ -3,10 +3,7 @@
 // Dynamically resolve the backend URL.
 // - When served from Netlify (francisgithua.netlify.app) we need the full Railway URL.
 // - When served from Railway itself (admin panel) relative /api works fine.
-const RAILWAY_URL = 'https://cyberblog-v2-production.up.railway.app';
-const API_BASE = window.location.hostname.includes('railway.app')
-  ? '/api'
-  : RAILWAY_URL + '/api';
+const API_BASE = 'https://cyberblog-v2-production.up.railway.app/api';
 
 async function fetchAPI(path) {
   const r = await fetch(API_BASE + path);
