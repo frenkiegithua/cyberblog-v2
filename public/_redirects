@@ -1,3 +1,10 @@
+/blog                 /pages/blog.html         200
+/categories           /pages/categories.html   200
+/article              /pages/article.html      200
+/about                /pages/about.html        200
+/contact              /pages/contact.html      200
+/resources            /pages/resources.html    200
+
 /pages/blog           /pages/blog.html          200
 /pages/categories     /pages/categories.html    200
 /pages/article        /pages/article.html       200
