@@ -46,6 +46,7 @@ initDB().then(() => {
   app.use('/api/comments', require('./routes/comments'));
   app.use('/api/admin',    require('./routes/admin'));
   app.use('/api/settings', require('./routes/settings'));
+  app.use('/api/scanner',  require('./routes/scanner'));
 
   app.get('/feed.xml',    require('./routes/feed'));
   app.get('/sitemap.xml', require('./routes/sitemap'));
