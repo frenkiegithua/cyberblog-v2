@@ -28,41 +28,6 @@ node server/setup-db.js
 ```
 Creates the database and prints your admin credentials.
 
-### Step 3 — Start server
-```
-npm start
-```
-
-Open http://localhost:3000
-
----
-
-## 🔐 Admin Panel
-
-**URL:** http://localhost:3000/admin
-
-**Default credentials:**
-- Username: `admin`
-- Password: `cybernotes2025`
-
-**⚠ Change the password** via Settings → Change Password after first login.
-
-### Admin features:
-- **Dashboard** — post count, total views, pending comments
-- **Posts** — create, edit, delete, search, filter by category
-- **Editor** — full Markdown editor with live preview
-- **Comments** — approve or delete with moderation queue
-- **Settings** — site title, author profile, toggle comment moderation
-
----
-
-## ✍️ Writing a new post
-
-1. Go to Admin → New Post
-2. Write in **Markdown** (GitHub-flavored)
-3. Set category, tags, status (Draft / Published)
-4. Toggle "Featured on Home" to show it on the homepage
-5. Click **Save Post**
 
 ### Markdown supported:
 ```markdown
